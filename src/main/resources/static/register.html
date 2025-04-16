@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<h2>Register</h2>
+<form id="registerForm">
+    <input type="text" id="name" placeholder="Full Name" required><br>
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+    <input type="text" id="number" placeholder="Mobile Number" required><br>
+    <input type="text" id="state" placeholder="State" required><br>
+    <input type="text" id="city" placeholder="City" required><br>
+    <input type="number" id="year" placeholder="Year" required><br>
+    <input type="text" id="course" placeholder="Course" required><br>
+    <button type="button" onclick="registerUser()">Register</button>
+</form>
+
+<script>
+    function registerUser() {
+        let formData = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+            number: document.getElementById("number").value,  // 🔥 fixed "mobile" to "number"
+            state: "Tamil Nadu",   // add more fields as needed
+            city: "Chennai",
+            year: 2025,
+            course: "Computer Science",
+            admissionStatus: "Pending"
+        };
+
+        fetch("http://localhost:8080/admission/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not OK");
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert("Registration Successful!");
+                window.location.href = "sucess.html"; // ✅ should work if in same folder
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Registration Failed. Check backend.");
+            });
+    }
+</script>
+</body>
+</html>
