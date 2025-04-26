@@ -5,6 +5,7 @@ import com.example.demo.model.Admissionuser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,6 +59,9 @@ public class Admissionservice {
             return "Fee successfully updated";
         }
         return "user not found";
+    }
+    public List<Admissionuser> getAllUsers() {
+        return ar.findAll();
     }
 
 }

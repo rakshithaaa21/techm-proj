@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "*")  // Allow frontend to access backend
 @RestController
@@ -54,5 +55,15 @@ public class AdmissionController{
     @PutMapping("/fee")
     public String updateFeeAmount(@RequestParam String email, @RequestParam int amount) {
         return admissionService.updateFeeStatus(email, amount);
+    }
+
+    @GetMapping("/admin/users")
+    public List<Admissionuser> getAllUsers() {
+        return admissionService.getAllUsers();
+    }
+
+    @PutMapping("/admin/status")
+    public String updateUserAdmissionStatus(@RequestParam String email, @RequestParam String status) {
+        return admissionService.updateAdmissionStatus(email, status);
     }
 }

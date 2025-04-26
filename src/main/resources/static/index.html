@@ -2,11 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Admission System</title>
+    <title>Admission Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+        button {
+            margin: 10px;
+            padding: 15px 25px;
+            font-size: 16px;
+            border: none;
+            background-color: #4285f4;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3367d6;
+        }
+    </style>
 </head>
 <body>
-<h2>Welcome to Admission Management System</h2>
-<a href="register.html"><button>Admission Open</button></a>
+<h1>Welcome to Admission Portal</h1>
+<button onclick="location.href='register.html'">Admission Open (Register)</button><br>
+<button onclick="location.href='login.html'">User Login</button><br>
+<button onclick="location.href='admin.html'">Admin Login</button>
 </body>
 </html>

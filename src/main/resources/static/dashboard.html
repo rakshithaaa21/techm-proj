@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <style>
+        body { font-family: Arial; margin: 40px; text-align: center; }
+        .status-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .accepted { color: green; font-weight: bold; }
+        .rejected { color: red; font-weight: bold; }
+        .pending { color: orange; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h2>Welcome to Your Admission Dashboard</h2>
+
+<div class="status-box">
+    <p id="admissionStatus">Loading...</p>
+    <p id="feeStatus"></p>
+</div>
+
+<script>
+    const email = sessionStorage.getItem("userEmail");
+
+    if (!email) {
+        alert("No user logged in.");
+        window.location.href = "login.html";
+    }
+
+    fetch(`http://localhost:8080/admission/status/${email}`)
+        .then(response => response.text())
+        .then(status => {
+            const admissionText = document.getElementById("admissionStatus");
+            const feeText = document.getElementById("feeStatus");
+
+            if (status.toLowerCase() === "accepted") {
+                admissionText.innerHTML = "Admission Status: <span class='accepted'>Granted</span>";
+                feeText.textContent = "Fee to be Paid: ₹90,000";
+            } else if (status.toLowerCase() === "rejected") {
+                admissionText.innerHTML = "Admission Status: <span class='rejected'>Rejected</span>";
+                feeText.textContent = "Fee to be Paid: ₹0";
+            } else {
+                admissionText.innerHTML = "Admission Status: <span class='pending'>Pending</span>";
+                feeText.textContent = "Fee to be Paid: ₹0";
+            }
+        })
+        .catch(err => {
+            console.error("Error fetching admission status:", err);
+            alert("Error loading dashboard.");
+        });
+</script>
+
+</body>
+</html>

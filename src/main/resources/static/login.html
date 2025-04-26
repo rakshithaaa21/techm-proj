@@ -17,11 +17,25 @@
     document.getElementById("loginForm").addEventListener("submit", function(event) {
         event.preventDefault();
         let formData = new FormData(this);
+        const loginData = Object.fromEntries(formData);
+
         fetch("http://localhost:8080/admission/login", {
             method: "POST",
-            body: JSON.stringify(Object.fromEntries(formData)),
+            body: JSON.stringify(loginData),
             headers: { "Content-Type": "application/json" }
-        }).then(response => response.text()).then(alert);
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data.trim().toLowerCase() === "login successful") {
+                    sessionStorage.setItem("userEmail", String(loginData.email));
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert("Login failed: " + data);
+                }
+            })
+            .catch(err => {
+                alert("Error: " + err);
+            });
     });
 </script>
 </body>

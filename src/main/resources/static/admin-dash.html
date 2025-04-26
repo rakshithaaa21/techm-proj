@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+        button { padding: 5px 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+
+<h2>Admin Dashboard</h2>
+<button onclick="logout()">Logout</button>
+<table id="userTable">
+    <thead>
+    <tr>
+        <th>Name</th><th>Email</th><th>Course</th><th>Status</th><th>Actions</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    function loadUsers() {
+        fetch("http://localhost:8080/admission/admin/users")
+            .then(res => res.json())
+            .then(users => {
+                const tbody = document.querySelector("#userTable tbody");
+                tbody.innerHTML = "";
+                users.forEach(user => {
+                    let row = `<tr>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.course}</td>
+                        <td>${user.admissionStatus || 'Pending'}</td>
+                        <td>
+                            <button onclick="updateStatus('${user.email}', 'Accepted')">Accept</button>
+                            <button onclick="updateStatus('${user.email}', 'Rejected')">Reject</button>
+                        </td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            });
+    }
+
+    function updateStatus(email, status) {
+        fetch(`http://localhost:8080/admission/admin/status?email=${email}&status=${status}`, {
+            method: 'PUT'
+        })
+            .then(() => loadUsers());
+    }
+    function logout() {
+        sessionStorage.removeItem("userEmail");
+        window.location.href = "login.html";
+    }
+
+    window.onload = loadUsers;
+</script>
+
+</body>
+</html>
