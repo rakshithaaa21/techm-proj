@@ -4,42 +4,137 @@
     <meta charset="UTF-8">
     <title>Admin Login</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 100px;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f2f6ff;
+            overflow-x: hidden;
         }
-        input, button {
-            display: block;
-            margin: 10px auto;
-            padding: 10px;
-            width: 250px;
-            font-size: 16px;
+
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: -1;
         }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-box {
+            display: flex;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            max-width: 850px;
+            overflow: hidden;
+            width: 90%;
+        }
+
+        .left {
+            background: #f0f4ff;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .left img {
+            width: 80%;
+        }
+
+        .right {
+            flex: 1;
+            padding: 50px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+        }
+
         button {
-            background-color: #4285f4;
-            color: white;
+            width: 100%;
+            padding: 12px;
+            background-color: #9b59b6;
             border: none;
-            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
             cursor: pointer;
+            margin-top: 10px;
         }
+
         button:hover {
-            background-color: #3367d6;
+            background-color: #7d3c98;
+        }
+
+        .extra-links {
+            text-align: right;
+            margin-top: 15px;
+            font-size: 12px;
+        }
+
+        .extra-links a {
+            color: #9b59b6;
+            text-decoration: none;
+        }
+
+        .extra-links a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-<h2>Admin Login</h2>
-<input type="email" id="email" placeholder="Admin Email" required>
-<input type="password" id="password" placeholder="Password" required>
-<button onclick="adminLogin()">Login</button>
+
+<div class="container">
+    <div class="login-box">
+        <div class="left">
+            <img src="https://cdn-icons-png.flaticon.com/512/3208/3208727.png" alt="Admin Graphic">
+        </div>
+        <div class="right">
+            <h2>Login as a Admin User</h2>
+            <input type="email" id="email" placeholder="admin@college.com" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button onclick="adminLogin()">LOGIN</button>
+            <div class="extra-links">
+                <a href="#">Forgot your password?</a><br>
+                <a href="#">Get help Signed in.</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SVG Wavy Background -->
+<div class="wave-bg">
+    <svg viewBox="0 0 1440 320">
+        <path fill="#8e44ad" fill-opacity="1" d="M0,64L60,74.7C120,85,240,107,360,101.3C480,96,600,64,720,85.3C840,107,960,181,1080,202.7C1200,224,1320,192,1380,176L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+        <path fill="#1abc9c" fill-opacity="0.8" d="M0,224L60,202.7C120,181,240,139,360,149.3C480,160,600,224,720,240C840,256,960,224,1080,197.3C1200,171,1320,149,1380,138.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+    </svg>
+</div>
 
 <script>
     function adminLogin() {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
-        // Hardcoded admin check (you can later validate this in backend too)
         if (email === "admin@college.com" && password === "admin123") {
             window.location.href = "admin-dash.html";
         } else {
@@ -47,5 +142,6 @@
         }
     }
 </script>
+
 </body>
 </html>

@@ -4,23 +4,128 @@
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
     <style>
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
-        button { padding: 5px 10px; margin: 5px; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-title {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .container {
+            margin: 30px auto;
+            max-width: 1000px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        td {
+            background-color: #fefefe;
+        }
+
+        button {
+            padding: 8px 14px;
+            margin: 2px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .accept-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .reject-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .status-pending {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .status-accepted {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-rejected {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-<h2>Admin Dashboard</h2>
-<button onclick="logout()">Logout</button>
-<table id="userTable">
-    <thead>
-    <tr>
-        <th>Name</th><th>Email</th><th>Course</th><th>Status</th><th>Actions</th>
-    </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+<header>
+    <div class="dashboard-title">Admin Dashboard</div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+    <h2>Registered Users</h2>
+    <table id="userTable">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Course</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
 <script>
     function loadUsers() {
@@ -30,16 +135,20 @@
                 const tbody = document.querySelector("#userTable tbody");
                 tbody.innerHTML = "";
                 users.forEach(user => {
+                    let statusClass = "status-pending";
+                    if (user.admissionStatus === "Accepted") statusClass = "status-accepted";
+                    else if (user.admissionStatus === "Rejected") statusClass = "status-rejected";
+
                     let row = `<tr>
-                        <td>${user.name}</td>
-                        <td>${user.email}</td>
-                        <td>${user.course}</td>
-                        <td>${user.admissionStatus || 'Pending'}</td>
-                        <td>
-                            <button onclick="updateStatus('${user.email}', 'Accepted')">Accept</button>
-                            <button onclick="updateStatus('${user.email}', 'Rejected')">Reject</button>
-                        </td>
-                    </tr>`;
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>${user.course}</td>
+            <td class="${statusClass}">${user.admissionStatus || 'Pending'}</td>
+            <td>
+              <button class="accept-btn" onclick="updateStatus('${user.email}', 'Accepted')">Accept</button>
+              <button class="reject-btn" onclick="updateStatus('${user.email}', 'Rejected')">Reject</button>
+            </td>
+          </tr>`;
                     tbody.innerHTML += row;
                 });
             });
@@ -48,12 +157,12 @@
     function updateStatus(email, status) {
         fetch(`http://localhost:8080/admission/admin/status?email=${email}&status=${status}`, {
             method: 'PUT'
-        })
-            .then(() => loadUsers());
+        }).then(() => loadUsers());
     }
+
     function logout() {
         sessionStorage.removeItem("userEmail");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
     }
 
     window.onload = loadUsers;
