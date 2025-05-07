@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Queries</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background-color: #f1f3fb; }
+    .sidebar { width: 240px; background: #2b2f3e; color: white; position: fixed; height: 100vh; padding: 1rem 0; }
+    .sidebar img { width: 80%; margin: 0 auto 2rem auto; display: block; }
+    .sidebar a { color: white; display: block; padding: 1rem 2rem; text-decoration: none; }
+    .sidebar a:hover, .active { background: #0d6efd; }
+    .main { margin-left: 240px; padding: 2rem; }
+    .card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    input, textarea { width: 100%; padding: 0.5rem; margin-top: 1rem; margin-bottom: 1rem; border-radius: 5px; border: 1px solid #ccc; }
+    button { background: orange; color: white; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+<div class="sidebar">
+  <img src="logo.png" alt="Presidency University" />
+  <a href="dashboard.html">Dashboard</a>
+  <a href="payments.html">My Payments</a>
+  <a href="queries.html" class="active">My Queries</a>
+  <a href="communications.html">My Communication</a>
+</div>
+<div class="main">
+  <h2>My Queries</h2>
+  <div class="card">
+    <form>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email">
+      <label for="query">Your Query</label>
+      <textarea id="query" name="query" rows="6" placeholder="Write your query here..."></textarea>
+      <button type="submit">Submit Query</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

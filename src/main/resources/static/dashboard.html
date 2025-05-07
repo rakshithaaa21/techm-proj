@@ -1,61 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>User Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Presidency University - Dashboard</title>
     <style>
-        body { font-family: Arial; margin: 40px; text-align: center; }
-        .status-box {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #f1f3fb; }
+        .sidebar { width: 240px; background: #2b2f3e; color: white; position: fixed; height: 100vh; padding: 1rem 0; }
+        .sidebar img { width: 80%; margin: 0 auto 2rem auto; display: block; }
+        .sidebar a { color: white; display: block; padding: 1rem 2rem; text-decoration: none; }
+        .sidebar a:hover, .active { background: #0d6efd; }
+        .main { margin-left: 240px; padding: 2rem; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+        .apply-button { background: orange; color: white; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; }
+        .journey-status { margin-top: 1rem; }
+        .journey-status div { margin-bottom: 0.5rem; }
         .accepted { color: green; font-weight: bold; }
         .rejected { color: red; font-weight: bold; }
         .pending { color: orange; font-weight: bold; }
     </style>
 </head>
 <body>
+<div class="sidebar">
+    <img src="logo.png" alt="Presidency University" />
+    <a href="DashBoardPage.html" class="active">Dashboard</a>
+    <a href="payments.html">My Payments</a>
+    <a href="queries.html">My Queries</a>
+    <a href="communications.html">My Communication</a>
+</div>
 
-<h2>Welcome to Your Admission Dashboard</h2>
+<div class="main">
+    <div class="header">
+        <h2>All Application Form(s)</h2>
+        <span>Welcome <strong id="userEmailDisplay">Student</strong></span>
+    </div>
 
-<div class="status-box">
-    <p id="admissionStatus">Loading...</p>
-    <p id="feeStatus"></p>
+    <div class="card">
+        <h3>Presidency University Admission Form 2025 - 26</h3>
+        <p><strong>Application No.:</strong> -</p>
+        <p><strong>Application Submitted On:</strong> -</p>
+        <p><strong>Application Fees paid:</strong> ₹0.00</p>
+        <button class="apply-button">Apply Now</button>
+        <div class="journey-status">
+            <div id="admissionStatus">Loading admission status...</div>
+            <div id="feeStatus"></div>
+        </div>
+    </div>
 </div>
 
 <script>
     const email = sessionStorage.getItem("userEmail");
-
     if (!email) {
         alert("No user logged in.");
         window.location.href = "login.html";
+    } else {
+        document.getElementById("userEmailDisplay").textContent = email;
+        fetch(`http://localhost:8080/admission/status/${email}`)
+    .then(response => response.text())
+            .then(status => {
+                const admissionText = document.getElementById("admissionStatus");
+                const feeText = document.getElementById("feeStatus");
+                if (status.toLowerCase() === "accepted") {
+                    admissionText.innerHTML = "Admission Status: <span class='accepted'>Granted</span>";
+                    feeText.textContent = "Fee to be Paid: ₹90,000";
+                } else if (status.toLowerCase() === "rejected") {
+                    admissionText.innerHTML = "Admission Status: <span class='rejected'>Rejected</span>";
+                    feeText.textContent = "Fee to be Paid: ₹0";
+                } else {
+                    admissionText.innerHTML = "Admission Status: <span class='pending'>Pending</span>";
+                    feeText.textContent = "Fee to be Paid: ₹0";
+                }
+            })
+            .catch(err => {
+                console.error("Error fetching status:", err);
+                alert("Error loading dashboard.");
+            });
     }
-
-    fetch(`http://localhost:8080/admission/status/${email}`)
-        .then(response => response.text())
-        .then(status => {
-            const admissionText = document.getElementById("admissionStatus");
-            const feeText = document.getElementById("feeStatus");
-
-            if (status.toLowerCase() === "accepted") {
-                admissionText.innerHTML = "Admission Status: <span class='accepted'>Granted</span>";
-                feeText.textContent = "Fee to be Paid: ₹90,000";
-            } else if (status.toLowerCase() === "rejected") {
-                admissionText.innerHTML = "Admission Status: <span class='rejected'>Rejected</span>";
-                feeText.textContent = "Fee to be Paid: ₹0";
-            } else {
-                admissionText.innerHTML = "Admission Status: <span class='pending'>Pending</span>";
-                feeText.textContent = "Fee to be Paid: ₹0";
-            }
-        })
-        .catch(err => {
-            console.error("Error fetching admission status:", err);
-            alert("Error loading dashboard.");
-        });
 </script>
-
 </body>
 </html>

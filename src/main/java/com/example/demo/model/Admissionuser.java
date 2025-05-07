@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +17,8 @@ public class Admissionuser {
     private String city;
     private int year;
     private String course;
+
+    @JsonProperty("feeAmount")
     private int feeAmount;
 
     public Long getId() {

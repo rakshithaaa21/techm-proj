@@ -1,34 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Register</title>
+    <meta charset="UTF-8" />
+    <title>Student Registration</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f4fa;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to top left, #41aea9, #9d50bb 70%);
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .form-content h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form input,
+        form select {
+            width: 100%;
+            padding: 10px 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            outline: none;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background-color: #9b4de0;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #7f3fbd;
+        }
+    </style>
 </head>
 <body>
-<h2>Register</h2>
-<form id="registerForm">
-    <input type="text" id="name" placeholder="Full Name" required><br>
-    <input type="email" id="email" placeholder="Email" required><br>
-    <input type="password" id="password" placeholder="Password" required><br>
-    <input type="text" id="number" placeholder="Mobile Number" required><br>
-    <input type="text" id="state" placeholder="State" required><br>
-    <input type="text" id="city" placeholder="City" required><br>
-    <input type="number" id="year" placeholder="Year" required><br>
-    <input type="text" id="course" placeholder="Course" required><br>
-    <button type="button" onclick="registerUser()">Register</button>
-</form>
+<div class="container">
+    <div class="card">
+        <div class="form-content">
+            <h2>Student Registration</h2>
+            <form id="registerForm">
+                <input type="text" id="name" placeholder="Full Name" required />
+                <input type="email" id="email" placeholder="Email" required />
+                <input type="password" id="password" placeholder="Password" required />
+                <input type="tel" id="number" placeholder="Mobile Number" pattern="[0-9]{10}" required />
+                <input type="text" id="state" placeholder="State" required />
+                <input type="text" id="city" placeholder="City" required />
+                <input type="number" id="year" placeholder="Year" required />
+                <input type="text" id="course" placeholder="Course" required />
+                <button type="button" onclick="registerUser()">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script>
     function registerUser() {
-        let formData = {
+        const formData = {
             name: document.getElementById("name").value,
             email: document.getElementById("email").value,
             password: document.getElementById("password").value,
-            number: document.getElementById("number").value,  // 🔥 fixed "mobile" to "number"
-            state: "Tamil Nadu",   // add more fields as needed
-            city: "Chennai",
-            year: 2025,
-            course: "Computer Science",
+            number: document.getElementById("number").value,
+            state: document.getElementById("state").value,
+            city: document.getElementById("city").value,
+            year: parseInt(document.getElementById("year").value),
+            course: document.getElementById("course").value,
             admissionStatus: "Pending"
         };
 
@@ -45,7 +113,7 @@
             })
             .then(data => {
                 alert("Registration Successful!");
-                window.location.href = "sucess.html"; // ✅ should work if in same folder
+                window.location.href = "sucess.html";
             })
             .catch(error => {
                 console.error("Error:", error);
