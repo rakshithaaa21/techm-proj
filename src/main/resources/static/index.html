@@ -1,40 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Presidency University</title>
     <style>
         body {
             margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-            'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-            sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-align: center;
-            padding-top: 100px;
+            font-family: Arial, sans-serif;
+            background-color: #072c49;
+            color: white;
         }
 
-        button {
-            margin: 10px;
-            padding: 15px 25px;
-            font-size: 16px;
-            border: none;
-            background-color: #4285f4;
+        .topbar {
+            display: flex;
+            align-items: center;
+            padding: 10px 30px;
+            background-color: #031d30;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu a {
             color: white;
-            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .menu a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background: orange;
+        }
+
+        .admissions {
+            background: orange;
+            color: black;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .icon {
+            font-size: 20px;
+            color: white;
             cursor: pointer;
         }
 
-        button:hover {
-            background-color: #3367d6;
+        .container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: #0c3a5a;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            padding: 10px 0;
+            color: #ccc;
+        }
+
+        .sidebar li strong {
+            color: white;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .programs {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .programs h2 {
+            color: #ccc;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .programs ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .programs li {
+            padding: 10px 0;
+            border-bottom: 1px solid #1f4a68;
         }
     </style>
 </head>
 <body>
-<h1>Welcome to Presidency University Admission Portal</h1>
-<button onclick="location.href='register.html'">Admission Open (Register)</button><br>
-<button onclick="location.href='login.html'">User Login</button><br>
-<button onclick="location.href='admin.html'">Admin Login</button>
+<header>
+    <div class="topbar">
+        <img src="logo.png" alt="Presidency University" class="logo">
+        <div class="menu">
+
+            <a href="admin.html">Admin</a>
+            <a href="register.html">Login</a>
+            <a href="register.html" class="admissions">ADMISSIONS 25-26</a>
+            <div class="icon">&#128269;</div>
+            <div class="icon">&#128100;</div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <aside class="sidebar">
+        <ul>
+            <li><strong>Presidency School of Computer Science and Engineering</strong></li>
+            <li>Presidency School of Engineering</li>
+            <li>Presidency School of Information Science</li>
+            <li>Presidency School of Management</li>
+            <li>Presidency School of Commerce</li>
+            <li>Presidency School of Law</li>
+            <li>Presidency School of Design</li>
+            <li>Presidency School of Media Studies</li>
+            <li>Presidency School of Liberal Arts and Sciences</li>
+            <li>Presidency School of Allied Health Sciences</li>
+        </ul>
+    </aside>
+
+    <section class="content">
+        <div class="programs">
+            <div>
+                <h2>UG Program/s</h2>
+                <ul>
+                    <li>B. Tech Computer Science & Engineering</li>
+                    <li>B. Tech Computer Science & Technology (Big Data)</li>
+                    <li>B. Tech Computer Science & Technology (DevOps)</li>
+                    <li>B. Tech Computer Science and Engineering (Artificial Intelligence & Machine Learning)</li>
+                    <li>B. Tech Computer Science & Engineering (Blockchain)</li>
+                    <li>B. Tech Computer Science & Engineering (Cyber Security)</li>
+                    <li>B. Tech Computer Science & Engineering (Data Science)</li>
+                </ul>
+            </div>
+            <div>
+                <h2>PG Program/s</h2>
+                <ul>
+                    <li>M. Tech. Computer Science and Engineering (Artificial Intelligence)</li>
+                    <li>M. Tech Computer Science and Engineering (Data Science)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>
 </body>
 </html>
