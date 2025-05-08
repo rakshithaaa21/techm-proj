@@ -2,7 +2,10 @@ package com.example.demo.Service;
 
 import com.example.demo.Repository.AdmissionUserRepository;
 import com.example.demo.model.Admissionuser;
+import org.apache.catalina.User;
+import com.example.demo.dto.loginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +13,9 @@ import java.util.Optional;
 
 @Service
 public class Admissionservice {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final AdmissionUserRepository ar;
 
@@ -19,12 +25,16 @@ public class Admissionservice {
     }
 
     public Admissionuser save(Admissionuser au){
+        if (!au.getPassword().startsWith("$2a$")) {
+            au.setPassword(passwordEncoder.encode(au.getPassword()));
+        }
         return ar.save(au);
     }
 
+
     public boolean validateLogin(String email, String password) {
         Optional<Admissionuser> user = ar.findByEmail(email);
-        return user.isPresent() && user.get().getPassword().equals(password);
+        return user.isPresent() && passwordEncoder.matches(password, user.get().getPassword());
     }
 
     public Optional<Admissionuser> getuserByEmail(String email) {
@@ -62,6 +72,24 @@ public class Admissionservice {
     }
     public List<Admissionuser> getAllUsers() {
         return ar.findAll();
+    }
+
+    public void saveUser(Admissionuser user) {
+        String rawPassword = user.getPassword(); // This is abc123
+        String encodedPassword = passwordEncoder.encode(rawPassword); // This becomes a hash
+        user.setPassword(encodedPassword);
+        ar.save(user);// Now save to DB
+    }
+
+    public String login(loginRequest loginRequest) {
+        Admissionuser user = ar.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Invalid credentials");
+        }
+
+        return "Login successful!";
     }
 
 }
