@@ -8,7 +8,7 @@ import com.example.demo.dto.loginRequest;
 import java.util.Optional;
 import java.util.*;
 
-@CrossOrigin(origins = "*")  // Allow frontend to access backend
+@CrossOrigin(origins = "http://localhost:63342", allowCredentials = "true") // Allow frontend to access backend
 @RestController
 @RequestMapping("/admission")
 public class AdmissionController{
